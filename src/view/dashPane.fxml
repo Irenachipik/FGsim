@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ViewController">
+   <children>
+      <Pane fx:id="welcomepane" prefHeight="980.0" prefWidth="600.0">
+          <children>
+              <Label alignment="CENTER" layoutX="218.0" layoutY="49.0" prefHeight="93.0" prefWidth="367.0" text="WELCOME" textAlignment="CENTER">
+                  <font>
+                      <Font name="System Bold" size="50.0" />
+                  </font>
+              </Label>
+              <Label layoutX="117.0" layoutY="160.0" prefHeight="33.0" prefWidth="541.0" text="To start analyzing your flight you'll need:">
+                  <font>
+                      <Font name="System Bold" size="14.0" />
+                  </font></Label>
+              <Label layoutX="145.0" layoutY="187.0" text="1. Import your spaciel simulator settings" />
+              <Label layoutX="145.0" layoutY="256.0" text="2. Import your last flight data in form of csv file" />
+
+              <Button layoutX="145.0" layoutY="285.0" mnemonicParsing="false" onAction="#onOpenCsvClicked" text="CSV file" />
+              <Button layoutX="145.0" layoutY="221.0" mnemonicParsing="false" onAction="#onOpenSettingsClicked" text="XML file" />
+              <TextField fx:id="CsvPath" editable="false" layoutX="226.0" layoutY="285.0" />
+              <TextField editable="false" layoutX="226.0" layoutY="221.0" fx:id="xmlPath" />
+              <Button fx:id="Start" disable="true" layoutX="336.0" layoutY="440.0" mnemonicParsing="false" onAction="#begin" prefHeight="81.0" prefWidth="132.0" text="Let's Go" />
+          </children>
+      </Pane>
+      <Pane fx:id="dashpane" prefHeight="200.0" prefWidth="200.0" visible="false">
+          <children>
+              <Pane layoutX="749.0" layoutY="14.0" opacity="0.95" prefHeight="179.0" prefWidth="200.0">
+                  <children>
+                      <Circle fx:id="OuterCircle" fill="#0b78d8" layoutX="100.0" layoutY="79.0" opacity="0.61" radius="51.0" stroke="BLACK" strokeType="INSIDE" />
+                      <Circle fx:id="InnerCircle" fill="#bdb9b9" layoutX="100.0" layoutY="79.0" radius="20.0" stroke="BLACK" strokeType="INSIDE">
+                      <effect>
+                          <DropShadow />
+                      </effect>
+                      </Circle>
+                      <Slider fx:id="throttleVal" disable="true" layoutX="10.0" layoutY="18.0" orientation="VERTICAL" prefHeight="127.0" prefWidth="15.0" />
+                      <Slider fx:id="rudderVal" disable="true" layoutX="33.0" layoutY="137.0" prefHeight="15.0" prefWidth="143.0" />
+                      <Label layoutX="64.0" layoutY="10.0" text="🢀 Aileron 🢂" />
+                      <Label layoutX="138.0" layoutY="70.0" rotate="90.0" text="🢀 Elevator 🢂" />
+                  </children>
+              </Pane>
+ 
+              <ListView fx:id="csvParam" layoutX="26.0" layoutY="23.0" prefHeight="323.0" prefWidth="226.0" />
+              <Pane layoutX="715.0" layoutY="176.0" prefHeight="209.0" prefWidth="234.0">
+                  <children>
+                      <Label layoutX="68.0" layoutY="6.0" prefHeight="17.0" prefWidth="96.0" text="Dashboard" textAlignment="CENTER" textFill="#22549a" />
+                      <Label fx:id="altVal" cacheShape="false" layoutX="82.0" layoutY="129.0" prefHeight="26.0" prefWidth="70.0" text="0" />
+                      <Label layoutX="10.0" layoutY="41.0" prefHeight="11.0" prefWidth="24.0" text="Roll">
+                          <font>
+                              <Font size="9.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="rollVal" cacheShape="false" layoutX="40.0" layoutY="35.0" prefHeight="25.0" prefWidth="49.0" text="0" />
+                      <Label layoutX="10.0" layoutY="63.0" text="Pitch">
+                          <font>
+                              <Font size="9.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="pitchVal" cacheShape="false" layoutX="40.0" layoutY="58.0" prefHeight="25.0" prefWidth="61.0" text="0" />
+                      <Label layoutX="10.0" layoutY="85.0" text="Yaw">
+                          <font>
+                              <Font size="9.0" />
+                          </font>
+                      </Label>
+                      <Label fx:id="yawVal" cacheShape="false" layoutX="40.0" layoutY="80.0" prefHeight="26.0" prefWidth="70.0" text="0" />
+                      <Pane layoutX="154.0" layoutY="142.0" prefHeight="74.0" prefWidth="69.0">
+                          <children>
+                              <Circle layoutX="43.0" layoutY="43.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Arc fx:id="speedGauge" fill="WHITE" layoutX="43.0" layoutY="43.0" length="365.0" radiusX="28.0" radiusY="28.0" startAngle="270.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                            <Label fx:id="airSpeedVal" cacheShape="false" layoutX="69.0" layoutY="-12.0" prefHeight="25.0" prefWidth="70.0" text="0" />
+                              <Label layoutX="22.0" layoutY="-8.0" prefHeight="17.0" prefWidth="56.0" text="Speed" />
+                          </children>
+                      </Pane>
+                      <Pane layoutX="11.0" layoutY="142.0" prefHeight="74.0" prefWidth="69.0">
+                          <children>
+                              <Circle layoutX="43.0" layoutY="43.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Arc fx:id="altitudeGauge" fill="WHITE" layoutX="43.0" layoutY="43.0" length="350.0" radiusX="28.0" radiusY="28.0" startAngle="270.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                              <Label layoutX="21.0" layoutY="-8.0" prefHeight="17.0" prefWidth="56.0" text="Altitude" />
+                          </children>
+                      </Pane>
+                  </children>
+              </Pane>
+              <Pane layoutX="146.0" layoutY="452.0" prefHeight="40.0" prefWidth="771.0">
+                  <children>
+                      <ToolBar layoutX="264.0" layoutY="2.0" prefHeight="35.0" prefWidth="221.0">
+                          <items>
+                              <Button fx:id="toBeginButton" mnemonicParsing="false" text="⏮" />
+                              <Button fx:id="fbButton" mnemonicParsing="false" text="⏪" />
+                              <Button fx:id="playButton" mnemonicParsing="false" text="⏵" />
+                              <Button fx:id="stopButton" mnemonicParsing="false" text="⏹" />
+                              <Button fx:id="pauseButton" mnemonicParsing="false" text="⏯" />
+                              <Button fx:id="ffButton" mnemonicParsing="false" text="⏩" />
+                              <Button fx:id="toEndButton" mnemonicParsing="false" text="⏭" />
+                          </items>
+                      </ToolBar>
+                      <Label fx:id="cTime" layoutX="536.0" prefHeight="40.0" prefWidth="49.0" text="0:00" />
+                      <ChoiceBox fx:id="flightRate" layoutX="128.0" layoutY="8.0" prefHeight="25.0" prefWidth="126.0" />
+                      <Label layoutX="21.0" layoutY="12.0" prefHeight="17.0" prefWidth="83.0" text="Change speed" />
+                  </children>
+              </Pane>
+              <Slider fx:id="playerSlider" layoutX="148.0" layoutY="519.0" prefHeight="15.0" prefWidth="790.0" />
+              <LineChart fx:id="selectedChart" layoutX="269.0" layoutY="19.0" legendVisible="false" prefHeight="209.0" prefWidth="234.0">
+                  <xAxis>
+                      <CategoryAxis side="BOTTOM" tickLabelsVisible="false" tickMarkVisible="false" />
+                  </xAxis>
+                  <yAxis>
+                      <NumberAxis side="LEFT" />
+                  </yAxis>
+              </LineChart>
+              <LineChart fx:id="correlatedChart" layoutX="487.0" layoutY="19.0" legendSide="TOP" legendVisible="false" prefHeight="209.0" prefWidth="226.0">
+                  <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                      <NumberAxis side="LEFT" />
+                  </yAxis>
+              </LineChart>
+              <ScatterChart fx:id="anomalyChart" layoutX="262.0" layoutY="215.0" prefHeight="247.0" prefWidth="451.0">
+                  <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                  </xAxis>
+                  <yAxis>
+                      <NumberAxis side="LEFT" />
+                  </yAxis>
+              </ScatterChart>
+              <Button fx:id="addAlgoBTN" layoutX="54.0" layoutY="360.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="156.0" text="Add Anomaly Algo" />
+          </children>
+      </Pane>
+   </children>
+</StackPane>
